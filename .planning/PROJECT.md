@@ -14,13 +14,13 @@ Completely automating the prospecting and initial cold-pitching phase so the use
 
 <!-- Shipped and confirmed valuable. -->
 
-(None yet — ship to validate)
+- [x] Web interface to manage lead scraping campaigns (search by keyword/location)
+- [x] Dashboard to view campaign metrics, active leads, and inbox replies
 
 ### Active
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] Web interface to manage lead scraping campaigns (search by keyword/location)
 - [ ] Scraper module for Google Maps to find businesses lacking a website link
 - [ ] Scraper module for Social Media (FB/IG) to find business profiles lacking website links
 - [ ] Extract contact emails for the discovered leads
@@ -28,7 +28,6 @@ Completely automating the prospecting and initial cold-pitching phase so the use
 - [ ] Automated email sending engine with pacing/delays to prevent spam flagging
 - [ ] Reply detection mechanism to identify positive responses from leads
 - [ ] Automated follow-up trigger to send the "website plans" email to positive replies
-- [ ] Dashboard to view campaign metrics, active leads, and inbox replies
 
 ### Out of Scope
 
