@@ -52,28 +52,28 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CORE-01 | Pending | Pending |
-| CORE-02 | Pending | Pending |
-| CORE-03 | Pending | Pending |
-| CORE-04 | Pending | Pending |
-| SCRP-01 | Pending | Pending |
-| SCRP-02 | Pending | Pending |
-| SCRP-03 | Pending | Pending |
-| SCRP-04 | Pending | Pending |
-| SCRP-05 | Pending | Pending |
-| MAIL-01 | Pending | Pending |
-| MAIL-02 | Pending | Pending |
-| MAIL-03 | Pending | Pending |
-| MAIL-04 | Pending | Pending |
-| AUTO-01 | Pending | Pending |
-| AUTO-02 | Pending | Pending |
-| AUTO-03 | Pending | Pending |
-| AUTO-04 | Pending | Pending |
+| CORE-01 | Phase 1 | Pending |
+| CORE-02 | Phase 1 | Pending |
+| CORE-03 | Phase 1 | Pending |
+| CORE-04 | Phase 1 | Pending |
+| SCRP-01 | Phase 2 | Pending |
+| SCRP-02 | Phase 2 | Pending |
+| SCRP-03 | Phase 2 | Pending |
+| SCRP-04 | Phase 2 | Pending |
+| SCRP-05 | Phase 2 | Pending |
+| MAIL-01 | Phase 3 | Pending |
+| MAIL-02 | Phase 3 | Pending |
+| MAIL-03 | Phase 3 | Pending |
+| MAIL-04 | Phase 3 | Pending |
+| AUTO-01 | Phase 4 | Pending |
+| AUTO-02 | Phase 4 | Pending |
+| AUTO-03 | Phase 4 | Pending |
+| AUTO-04 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 17 total
-- Mapped to phases: 0
-- Unmapped: 17 ⚠️
+- Mapped to phases: 17
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-03-22*
