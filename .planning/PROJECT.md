@@ -4,6 +4,16 @@
 
 An automated web application that scrapes Google Maps for local businesses without a website. It extracts contact information and sends paced cold emails via user-owned Gmail (App Passwords/SMTP). Positive replies automatically trigger a follow-up pitch email with website plans.
 
+## Current Milestone: v1.1
+
+**Goal:** Upgrade the outreach pipeline with email extraction, personalized templates, multi-account SMTP rotation, and a performance analytics dashboard.
+
+**Target features:**
+- Email extraction from Google Maps listings and business websites
+- Template merge variables (`{business_name}`, `{city}`, `{first_name}`)
+- Multi-account SMTP pool rotation for higher-volume sending
+- Analytics dashboard (send rate, reply rate, conversion funnel per campaign)
+
 ## Core Value
 
 Completely automating the prospecting and initial cold-pitching phase so the user can seamlessly acquire web design clients without manual grinding.

@@ -1,80 +1,81 @@
-# Requirements: Lead Generator & Cold Outreach Engine
+# v1.1 Requirements — Outreach Engine
 
-**Defined:** 2026-03-22
-**Core Value:** Automating the prospecting and initial cold-pitching phase so the user can easily acquire web design clients without manual grinding.
+## Scope
+
+v1.1 adds four capabilities to the v1.0 MVP:
+- Email extraction from scraped lead profiles
+- Analytics dashboard (campaign performance visibility)
+- Multi-account SMTP pool rotation
+- Email template variable personalization
+
+---
 
 ## v1 Requirements
 
-### Foundation & Dashboard (CORE)
+### Email Extraction (B)
 
-- [ ] **CORE-01**: User can view a dashboard summary of Campaigns, active Leads, Sent Emails, and Replies
-- [ ] **CORE-02**: User can create, edit, and manage Campaigns (defining keywords and locations)
-- [ ] **CORE-03**: User can view and filter the list of Leads associated with a Campaign
-- [ ] **CORE-04**: User can configure an Initial Pitch email template and a Follow-Up email template
+- [ ] **EXTR-01**: System automatically extracts email addresses from Google Maps business listing pages for scraped leads.
+- [ ] **EXTR-02**: System attempts to extract emails by crawling the business's listed website URL (e.g., looking for mailto: links and contact page patterns).
+- [ ] **EXTR-03**: Extracted emails are saved to the Lead record and displayed in the Leads Hub table.
+- [ ] **EXTR-04**: Leads without extractable emails are marked with status `NO_EMAIL` so users can filter them out.
 
-### Scraping Engine (SCRP)
+### Analytics Dashboard (C)
 
-- [ ] **SCRP-01**: System can scrape Google Maps for businesses matching a Campaign's parameters
-- [ ] **SCRP-02**: System detects if a business listing lacks a website link
-- [ ] **SCRP-03**: System uses fallback search on Facebook/Instagram to locate missing contact info
-- [ ] **SCRP-04**: System extracts available email addresses for the target businesses
-- [ ] **SCRP-05**: System securely queues scraping jobs without blocking the web UI
+- [ ] **ANLX-01**: User can view a campaign-level analytics card showing total leads, emails sent, reply rate, and positive reply count.
+- [ ] **ANLX-02**: User can view a project-level summary across all campaigns (total outreach, total replies, total conversions).
+- [ ] **ANLX-03**: The analytics view auto-refreshes every 30 seconds to reflect current queue activity.
+- [ ] **ANLX-04**: User can see a breakdown of lead statuses (NEW, CONTACTED, REPLIED_POSITIVE, REPLIED_NEGATIVE, NO_EMAIL) for each campaign.
 
-### Email Outreach (MAIL)
+### Multi-account SMTP Pool Rotation (D)
 
-- [ ] **MAIL-01**: User can add and manage multiple SMTP/IMAP accounts (e.g., Gmail with App Passwords)
-- [ ] **MAIL-02**: System can dispatch the Initial Pitch template to a batch of Leads
-- [ ] **MAIL-03**: System rotates through available active SMTP accounts for sending
-- [ ] **MAIL-04**: System enforces pacing (e.g., random 8-15 minute delays) between emails to protect sender reputation
+- [ ] **SMTP-01**: User can add multiple SMTP credential sets (each linked to a different Gmail/email account) from the Settings UI.
+- [ ] **SMTP-02**: When dispatching a campaign, the system round-robin rotates through all active SMTP accounts to distribute sending load.
+- [ ] **SMTP-03**: User can enable/disable individual SMTP accounts without deleting them.
+- [ ] **SMTP-04**: Each sent email is recorded with which SMTP account was used (for per-account deliverability tracking).
 
-### Automation & Reply Handling (AUTO)
+### Email Template Variables (E)
 
-- [ ] **AUTO-01**: System periodically polls connected IMAP accounts for replies
-- [ ] **AUTO-02**: System categorizes incoming replies to detect positive intent
-- [ ] **AUTO-03**: System automatically dispatches the Follow-Up template when a positive reply is detected
-- [ ] **AUTO-04**: System marks Leads as "Unsubscribed" or "Failed" and halts further outreach based on negative replies or bounces
+- [ ] **TMPL-01**: Email templates support `{business_name}`, `{city}`, and `{first_name}` merge variables.
+- [ ] **TMPL-02**: Variables are replaced at send time using the lead's stored fields (name → split to first_name, location → city).
+- [ ] **TMPL-03**: Template editor shows a live preview pane that renders the final email with sample variable values.
+- [ ] **TMPL-04**: If a required variable is missing for a specific lead, the system substitutes a sensible fallback (e.g., "there" for `{first_name}`).
 
-## v2 Requirements
+---
 
-### Analytics & AI
-- **ANLT-01**: Advanced dashboard charts showing conversion rates by SMTP account
-- **AI-01**: AI-generated highly personalized first lines for the cold emails
+## Future Requirements (Deferred from v1.1)
+
+- Social Media Scraper (Facebook/Instagram) — deferred to v1.2
+- CRM-style lead notes and manual status overrides — post-v1.1
+- Unsubscribe link auto-injection in outbound emails — post-v1.1
+- Open/click tracking (pixel embedding) — post-v1.1
+
+---
 
 ## Out of Scope
 
-| Feature | Reason |
-|---------|--------|
-| Paid Email Service Integrations | User wants connection to free Gmail/SMTP to keep costs down and initial deliverability high. |
-| Automatic Website Generation | We only pitch the service; the user performs the actual web design work manually. |
-| In-browser realtime scraping | Must be done server-side via Playwright to avoid CORS/IP blocks and browser freezing. |
+- Paid email providers (SendGrid, Mailgun) — free BYO-SMTP approach maintained
+- Automated website building / fulfillment — tool is lead gen only
+- Mobile app — web dashboard sufficient
+
+---
 
 ## Traceability
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| CORE-01 | Phase 1 | Pending |
-| CORE-02 | Phase 1 | Pending |
-| CORE-03 | Phase 1 | Pending |
-| CORE-04 | Phase 1 | Pending |
-| SCRP-01 | Phase 2 | Pending |
-| SCRP-02 | Phase 2 | Pending |
-| SCRP-03 | Phase 2 | Pending |
-| SCRP-04 | Phase 2 | Pending |
-| SCRP-05 | Phase 2 | Pending |
-| MAIL-01 | Phase 3 | Pending |
-| MAIL-02 | Phase 3 | Pending |
-| MAIL-03 | Phase 3 | Pending |
-| MAIL-04 | Phase 3 | Pending |
-| AUTO-01 | Phase 4 | Pending |
-| AUTO-02 | Phase 4 | Pending |
-| AUTO-03 | Phase 4 | Pending |
-| AUTO-04 | Phase 4 | Pending |
-
-**Coverage:**
-- v1 requirements: 17 total
-- Mapped to phases: 17
-- Unmapped: 0 ✓
-
----
-*Requirements defined: 2026-03-22*
-*Last updated: 2026-03-22 after initial definition*
+| REQ-ID | Phase | Status |
+|--------|-------|--------|
+| EXTR-01 | 5 | Pending |
+| EXTR-02 | 5 | Pending |
+| EXTR-03 | 5 | Pending |
+| EXTR-04 | 5 | Pending |
+| ANLX-01 | 8 | Pending |
+| ANLX-02 | 8 | Pending |
+| ANLX-03 | 8 | Pending |
+| ANLX-04 | 8 | Pending |
+| SMTP-01 | 7 | Pending |
+| SMTP-02 | 7 | Pending |
+| SMTP-03 | 7 | Pending |
+| SMTP-04 | 7 | Pending |
+| TMPL-01 | 6 | Pending |
+| TMPL-02 | 6 | Pending |
+| TMPL-03 | 6 | Pending |
+| TMPL-04 | 6 | Pending |
