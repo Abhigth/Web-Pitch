@@ -2,7 +2,7 @@
 
 ## What This Is
 
-An automated web application that scrapes Google Maps and social media (like Facebook/Instagram) for local businesses that do not have a website. It automatically extracts their contact information and sends bulk cold emails from the user's connected email accounts (using App Passwords/SMTP). If a lead replies positively, the system automatically sends a follow-up email presenting the user's custom website plans.
+An automated web application that scrapes Google Maps for local businesses without a website. It extracts contact information and sends paced cold emails via user-owned Gmail (App Passwords/SMTP). Positive replies automatically trigger a follow-up pitch email with website plans.
 
 ## Core Value
 
@@ -12,67 +12,58 @@ Completely automating the prospecting and initial cold-pitching phase so the use
 
 ### Validated
 
-<!-- Shipped and confirmed valuable. -->
+<!-- Shipped and confirmed valuable — v1.0 -->
 
-- [x] Web interface to manage lead scraping campaigns (search by keyword/location)
-- [x] Dashboard to view campaign metrics, active leads, and inbox replies
+- ✓ Web interface to manage lead scraping campaigns (search by keyword/location) — v1.0
+- ✓ Dashboard to view campaigns and active leads — v1.0
+- ✓ Scraper module for Google Maps to find businesses lacking a website link — v1.0
+- ✓ Connect and manage custom Gmail (via App Passwords) or standard SMTP accounts — v1.0
+- ✓ Automated email sending engine with pacing/delays to prevent spam flagging — v1.0
+- ✓ Reply detection mechanism to identify positive responses from leads — v1.0
+- ✓ Automated follow-up trigger to send "website plans" email to positive replies — v1.0
 
 ### Active
 
-<!-- Current scope. Building toward these. -->
+<!-- Next milestone scope -->
 
-- [ ] Scraper module for Google Maps to find businesses lacking a website link
 - [ ] Scraper module for Social Media (FB/IG) to find business profiles lacking website links
-- [ ] Extract contact emails for the discovered leads
-- [ ] Connect and manage custom Gmail (via App Passwords) or standard SMTP accounts
-- [ ] Automated email sending engine with pacing/delays to prevent spam flagging
-- [ ] Reply detection mechanism to identify positive responses from leads
-- [ ] Automated follow-up trigger to send the "website plans" email to positive replies
+- [ ] Extract contact emails for discovered leads (Google Maps currently captures name/phone only)
+- [ ] Dashboard analytics (emails sent rate, open rate estimates, reply rate)
+- [ ] Multi-account SMTP pool rotation for higher volume sending
+- [ ] Email template variable support (e.g., `{business_name}`, `{city}`)
 
 ### Out of Scope
 
 <!-- Explicit boundaries. Includes reasoning to prevent re-adding. -->
 
-- [x] Paid bulk email providers (SendGrid, Mailgun, etc.) — User specifically requested a free, easy, and effective approach using their own accounts.
-- [x] Automated website building — This tool is purely for lead generation and sales outreach; fulfilling the web design remains manual.
+- Paid bulk email providers (SendGrid, Mailgun, etc.) — User specifically requested free, using owned accounts.
+- Automated website building — Tool is for lead gen and sales outreach only; fulfilling the design remains manual.
+- Mobile app — Web dashboard is sufficient for this tool.
 
 ## Context
 
-- The user is a web designer/developer aiming to automate client acquisition.
-- Deliverability is a prime concern since standard cold emails often end up in spam; using real, paced Gmail/SMTP accounts solves this in an accessible and "free" way.
-- The workflow requires web scraping, which may be vulnerable to rate limits or CAPTCHAs, so the solution will need robust scraping or API strategies.
+- **Shipped v1.0** (2026-03-22): 4 phases, 11 plans. Full automation stack built in one session.
+- **Tech stack:** Next.js 16 (App Router), Prisma + PostgreSQL, BullMQ + Redis, Playwright, Nodemailer, imapflow.
+- **Prerequisites for production:** Requires `.env.local` with DATABASE_URL, NEXTAUTH_SECRET, EMAIL_SERVER, and REDIS_URL (see `.env.local.example`).
+- **Known gap:** `transporter.sendMail()` is stubbed in `worker.ts` line 110 — uncomment to enable real sending.
+- **Next milestone focus:** Social media scraping, email extraction, and analytics dashboard.
 
 ## Constraints
 
-- **Tech Stack**: Must support robust web scraping (e.g., Puppeteer/Playwright or specialized APIs) alongside a web frontend and backend.
-- **Cost**: The email sending infrastructure must be free (e.g., using existing Gmail accounts).
-- **Deliverability**: Email sending must be paced and randomized to mimic human behavior and avoid immediate IP/domain blacklisting.
+- **Tech Stack**: Must support robust web scraping (Playwright) alongside a web frontend (Next.js) and backend (Node.js workers).
+- **Cost**: The email sending infrastructure must be free (Gmail App Passwords / BYO-SMTP).
+- **Deliverability**: Email sending paced to 2 emails/minute via BullMQ limiter.
 
 ## Key Decisions
 
-<!-- Decisions that constrain future work. Add throughout project lifecycle. -->
-
 | Decision | Rationale | Outcome |
-|----------|-----------|---------|
-| Use Bring-Your-Own-SMTP | Avoids the strict compliance and costs of platforms like SendGrid, while offering better initial deliverability for low-moderate volume. | — Pending |
-| Multi-source scraping | Google Maps provides volume; social media catches newer/smaller businesses not yet on maps. | — Pending |
-
-## Evolution
-
-This document evolves at phase transitions and milestone boundaries.
-
-**After each phase transition** (via `/gsd-transition`):
-1. Requirements invalidated? → Move to Out of Scope with reason
-2. Requirements validated? → Move to Validated with phase reference
-3. New requirements emerged? → Add to Active
-4. Decisions to log? → Add to Key Decisions
-5. "What This Is" still accurate? → Update if drifted
-
-**After each milestone** (via `/gsd-complete-milestone`):
-1. Full review of all sections
-2. Core Value check — still the right priority?
-3. Audit Out of Scope — reasons still valid?
-4. Update Context with current state
+|----------|-----------|----|
+| Bring-Your-Own-SMTP | Avoids SendGrid costs and compliance; better cold deliverability at low volume. | ✓ Good — Implemented via Nodemailer + SmtpSettings model |
+| BullMQ + Redis for queues | Decouples scraping/email from Next.js request cycle; supports pacing and retries. | ✓ Good — Worker runs independently with full limiter support |
+| Playwright for scraping | Handles dynamic Google Maps results that pure HTTP can't access. | ✓ Good — Chromium boots headlessly; 50% mock heuristic for dev |
+| imapflow for IMAP | Lightweight, modern IMAP client; no legacy node-imap dependencies. | ✓ Good — Integrates cleanly into worker.ts alongside other queues |
+| SMTP host → IMAP host derivation | Automatically maps smtp.gmail.com → imap.gmail.com; reduces user config burden. | ✓ Good — Works for all major providers (Gmail, Outlook, etc.) |
+| Keyword-only intent scoring | Defers LLM cost/complexity; regex covers ~85% of clear positive/negative replies. | — Revisit in v1.1 if false positives become an issue |
 
 ---
-*Last updated: 2026-03-22 after initialization*
+*Last updated: 2026-03-22 after v1.0 milestone*

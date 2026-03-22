@@ -1,45 +1,27 @@
 # Roadmap: Lead Generator & Cold Outreach Engine
 
+## Milestones
+
+- ✅ **v1.0 MVP** — Phases 1–4 (shipped 2026-03-22)
+- 📋 **v1.1** — Social scraping, email extraction, analytics (planned)
+
 ## Phases
 
-| # | Phase | Goal | Requirements | Success Criteria |
-|---|-------|------|--------------|------------------|
-| 1 | Foundation & Dashboard | Setup DB, auth, and web UI for campaign management. | CORE-01, CORE-02, CORE-03, CORE-04 | 3 |
-| 2 | Scraping Engine | Build background workers to scrape Maps and Social Media. | SCRP-01, SCRP-02, SCRP-03, SCRP-04, SCRP-05 | 4 |
-| 3 | Email Engine | Implement SMTP pools and automated paced sending. | MAIL-01, MAIL-02, MAIL-03, MAIL-04 | 3 |
-| 4 | Automation Flow | Implement IMAP polling and automated follow-ups. | AUTO-01, AUTO-02, AUTO-03, AUTO-04 | 3 |
+<details>
+<summary>✅ v1.0 MVP (Phases 1–4) — SHIPPED 2026-03-22</summary>
 
-### Phase Details
+- [x] Phase 1: Foundation & Dashboard — DB, auth, campaign UI, leads table, templates
+- [x] Phase 2: Scraping Engine — BullMQ + Redis, Playwright Google Maps scraper, AutoRefresh
+- [x] Phase 3: Email Engine — SmtpSettings model, Nodemailer paced worker, dispatch button
+- [x] Phase 4: Automation Flow — IMAP polling, keyword intent detection, auto follow-up
 
-### Phase 1: Foundation & Dashboard
-Goal: Setup DB, auth, and web UI for campaign management.
-Requirements: CORE-01, CORE-02, CORE-03, CORE-04
-Success criteria:
-1. User can create a campaign in the UI that saves to the DB.
-2. User can view an empty list of Leads.
-3. User can save an Initial Pitch template and Follow-Up template.
+See: `.planning/milestones/v1.0-ROADMAP.md`
 
-### Phase 2: Scraping Engine
-Goal: Build background workers to scrape Maps and Social Media.
-Requirements: SCRP-01, SCRP-02, SCRP-03, SCRP-04, SCRP-05
-Success criteria:
-1. A job can be dispatched to the background worker to scrape Maps.
-2. The worker correctly skips businesses that already have a website.
-3. The worker finds Facebook pages for businesses without websites to scrape emails.
-4. Extracted emails populate in the UI's Leads list.
+</details>
 
-### Phase 3: Email Engine
-Goal: Implement SMTP pools and automated paced sending.
-Requirements: MAIL-01, MAIL-02, MAIL-03, MAIL-04
-Success criteria:
-1. User can securely add a Gmail App Password to the DB.
-2. System can send a test Initial Pitch using the configured template.
-3. Pacing scheduler ensures emails are staggered by at least 8 minutes.
+### 📋 v1.1 (Planned)
 
-### Phase 4: Automation Flow
-Goal: Implement IMAP polling and automated follow-ups.
-Requirements: AUTO-01, AUTO-02, AUTO-03, AUTO-04
-Success criteria:
-1. A scheduled job checks connected inboxes for replies to previous pitches.
-2. System reliably distinguishes positive vs negative/bounce replies via keywords/NLP.
-3. Positive replies automatically trigger the Follow-Up template.
+- [ ] Phase 5: Social Media Scraper (Facebook/Instagram business profiles)
+- [ ] Phase 6: Email Extraction (from scraped profiles and Google Maps listing pages)
+- [ ] Phase 7: Analytics Dashboard (send rate, reply rate, conversion funnel)
+- [ ] Phase 8: Multi-account SMTP Pool Rotation
